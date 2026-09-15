@@ -31,8 +31,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-3">
-              <Image src="/brand/mark.png" alt="" width={36} height={30} style={{ height: 30, width: "auto" }} />
-              <span className="text-[17px] font-semibold tracking-tight text-ink">{site.name}</span>
+              <Image src="/brand/mark.png" alt="" width={36} height={30} style={{ height: 34, width: "auto" }} />
+              <span className="flex flex-col leading-none">
+                <span className="text-[17px] font-bold tracking-tight text-ink">Green Planet</span>
+                <span className="text-[13px] font-normal tracking-wide text-ink-2">Technology</span>
+              </span>
             </Link>
             <p className="mt-5 max-w-[34ch] text-[14.5px] leading-relaxed text-ink-2">
               Prestataire de services par drone, de services satellitaires et de solutions de monitoring pour les

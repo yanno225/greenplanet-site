@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GreenPlanet Technology — Drones, Satellites & Monitoring",
+  title: "Green Planet Technology — Drones, Satellites & Monitoring",
   description:
-    "GreenPlanet Technology conçoit des systèmes autonomes de drones, des services satellitaires et des solutions de monitoring pour sécuriser les infrastructures critiques.",
+    "Green Planet Technology, prestataire de services par drone, de services satellitaires et de solutions de monitoring pour les infrastructures, les territoires et les réseaux.",
   icons: { icon: "/brand/mark.png" },
 };
 

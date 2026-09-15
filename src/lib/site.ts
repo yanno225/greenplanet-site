@@ -1,6 +1,6 @@
 export const site = {
-  name: "GreenPlanet",
-  fullName: "GreenPlanet Technology",
+  name: "Green Planet Technology",
+  fullName: "Green Planet Technology",
   tagline: "Drones · Satellites · Monitoring",
   descriptor: "Intelligence géospatiale & surveillance autonome",
   nav: [
@@ -28,7 +28,7 @@ export const site = {
       fax: "+1 514 639 3020",
     },
   ],
-  // TODO: remplacer par les URLs exactes des pages GreenPlanet (non indiquées sur le site actuel).
+  // TODO: remplacer par les URLs exactes des pages Green Planet Technology (non indiquées sur le site actuel).
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/company/greenplanet-technology" },
     { label: "Facebook", href: "https://www.facebook.com/greenplanettechnology" },

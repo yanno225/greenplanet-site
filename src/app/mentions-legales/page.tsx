@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Mentions légales — GreenPlanet Technology",
+  title: "Mentions légales — Green Planet Technology",
 };
 
 export default function MentionsLegales() {

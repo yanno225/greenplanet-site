@@ -1,6 +1,6 @@
-# GreenPlanet Technology — Site corporate
+# Green Planet Technology — Site corporate
 
-Site vitrine de GreenPlanet Technology (drones, satellites, monitoring).
+Site vitrine de Green Planet Technology (drones, satellites, monitoring).
 Direction artistique : corporate, futuriste, esprit startup américaine.
 Palette issue du logo : vert profond `#085055`, jaune doré `#F9CA15`.
 

@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Politique de confidentialité — GreenPlanet Technology",
+  title: "Politique de confidentialité — Green Planet Technology",
 };
 
 export default function Confidentialite() {

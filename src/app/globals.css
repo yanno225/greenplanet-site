@@ -59,11 +59,8 @@ body {
   color: var(--ink);
 }
 
-/* Giant watermark behind the drone */
+/* Giant brand lockup in the hero panel */
 .watermark {
-  font-weight: 700;
-  letter-spacing: -0.06em;
-  line-height: 0.8;
   color: rgba(255, 255, 255, 0.92);
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9),
@@ -71,6 +68,22 @@ body {
     0 2px 2px rgba(8, 80, 85, 0.04);
   user-select: none;
   white-space: nowrap;
+}
+.watermark-name {
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+.watermark-thin {
+  font-weight: 300;
+  letter-spacing: -0.035em;
+}
+.watermark-sub {
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding-left: 0.42em; /* optical centring of the letter-spaced word */
 }
 
 /* Faint technical grid on the hero panel */

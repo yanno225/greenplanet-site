@@ -16,7 +16,7 @@ export async function generateMetadata(props: PageProps<"/realisations/[slug]">)
   const project = getProject(slug);
   if (!project) return {};
   return {
-    title: `${project.heading} — Réalisations GreenPlanet Technology`,
+    title: `${project.heading} — Réalisations Green Planet Technology`,
     description: project.intro,
   };
 }
@@ -104,7 +104,7 @@ export default async function ProjectPage(props: PageProps<"/realisations/[slug]
             <div className="lg:pt-1">
               <div className="rounded-[24px] bg-gp-green p-8 text-white md:p-10">
                 <h2 className="text-[clamp(22px,2vw,28px)] font-medium leading-tight tracking-tight">
-                  Services fournis par GreenPlanet
+                  Services fournis par Green Planet Technology
                 </h2>
                 <ul className="mt-7 flex flex-col gap-4">
                   {project.delivered.map((d) => (

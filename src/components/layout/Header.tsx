@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import MenuOverlay from "./MenuOverlay";
-import { site } from "@/lib/site";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -15,13 +14,16 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/brand/mark.png"
-            alt="GreenPlanet"
+            alt=""
             width={36}
             height={30}
             priority
-            style={{ height: 30, width: "auto" }}
+            style={{ height: 34, width: "auto" }}
           />
-          <span className="text-[17px] font-semibold tracking-tight text-ink">{site.name}</span>
+          <span className="flex flex-col leading-none">
+            <span className="text-[17px] font-bold tracking-tight text-ink">Green Planet</span>
+            <span className="text-[13px] font-normal tracking-wide text-ink-2">Technology</span>
+          </span>
         </Link>
 
         <button

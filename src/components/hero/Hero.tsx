@@ -111,19 +111,44 @@ export default function Hero() {
         </motion.div>
 
         {/* Watermark: embossed on the light panel, then white over the footage */}
-        <div className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center overflow-hidden">
-          <motion.span
-            className="watermark text-[clamp(64px,15vw,290px)]"
+        <div className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center overflow-hidden px-6">
+          <motion.div
+            className="watermark flex flex-col items-center"
             initial={false}
             animate={
               showVideo
-                ? { color: "rgba(255,255,255,0.92)", textShadow: "0 8px 40px rgba(0,0,0,0.35)" }
+                ? { color: "rgba(255,255,255,0.94)", textShadow: "0 8px 40px rgba(0,0,0,0.35)" }
                 : { color: "rgba(255,255,255,0.92)", textShadow: "0 1px 0 rgba(255,255,255,0.9), 0 18px 40px rgba(8,80,85,0.08)" }
             }
             transition={{ duration: 1.3, ease }}
           >
-            greenplanet
-          </motion.span>
+            {/* Line 1: light, tight display */}
+            <span className="watermark-name text-[clamp(52px,10.5vw,196px)]">
+              Green<span className="watermark-thin"> Planet</span>
+            </span>
+
+            {/* Line 2: spaced small caps between two hairlines */}
+            <span className="watermark-sub mt-[0.35em] flex items-center gap-[1.2em] text-[clamp(11px,1.35vw,24px)]">
+              <motion.span
+                className="h-px w-[3.5em] origin-right"
+                style={{ background: "currentColor", opacity: 0.55 }}
+                initial={false}
+                animate={{ scaleX: showVideo ? 1 : 0.7 }}
+                transition={{ duration: 1.3, ease }}
+              />
+              <span className="flex items-center gap-[0.8em]">
+                <span className="inline-block h-[0.42em] w-[0.42em] rounded-full bg-gp-yellow" />
+                Technology
+              </span>
+              <motion.span
+                className="h-px w-[3.5em] origin-left"
+                style={{ background: "currentColor", opacity: 0.55 }}
+                initial={false}
+                animate={{ scaleX: showVideo ? 1 : 0.7 }}
+                transition={{ duration: 1.3, ease }}
+              />
+            </span>
+          </motion.div>
         </div>
 
         {/* corner markers */}
