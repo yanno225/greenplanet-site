@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+:root {
+  --gp-green: #085055;
+  --gp-green-deep: #05383c;
+  --gp-green-soft: #e6f0ef;
+  --gp-yellow: #f9ca15;
+  --gp-yellow-deep: #d9ac00;
+  --ink: #0b1c1e;
+  --ink-2: #4b5c5e;
+  --ink-3: #8a9799;
+  --line: #e4e9e9;
+  --paper: #ffffff;
+  --paper-2: #f4f7f7;
+}
+
+@theme inline {
+  --color-gp-green: var(--gp-green);
+  --color-gp-green-deep: var(--gp-green-deep);
+  --color-gp-green-soft: var(--gp-green-soft);
+  --color-gp-yellow: var(--gp-yellow);
+  --color-gp-yellow-deep: var(--gp-yellow-deep);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: auto;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--gp-yellow);
+  color: var(--ink);
+}
+
+/* Giant watermark behind the drone */
+.watermark {
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9),
+    0 18px 40px rgba(8, 80, 85, 0.08),
+    0 2px 2px rgba(8, 80, 85, 0.04);
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Faint technical grid on the hero panel */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(8, 80, 85, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(8, 80, 85, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+/* Corner markers like a viewfinder */
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(8, 80, 85, 0.35);
+  border-style: solid;
+  border-width: 0;
+}
+.corner-tl { top: 18px; left: 18px; border-top-width: 1px; border-left-width: 1px; }
+.corner-tr { top: 18px; right: 18px; border-top-width: 1px; border-right-width: 1px; }
+.corner-bl { bottom: 18px; left: 18px; border-bottom-width: 1px; border-left-width: 1px; }
+.corner-br { bottom: 18px; right: 18px; border-bottom-width: 1px; border-right-width: 1px; }
+
+
+/* Active sector tab: concave joins where the tab meets the image frame (desktop only) */
+@media (min-width: 1024px) {
+  .sector-tab::before,
+  .sector-tab::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    background: var(--gp-green-soft);
+  }
+  .sector-tab::before {
+    top: -16px;
+    mask-image: radial-gradient(circle at 0 0, transparent 16px, black 16.5px);
+    -webkit-mask-image: radial-gradient(circle at 0 0, transparent 16px, black 16.5px);
+  }
+  .sector-tab::after {
+    bottom: -16px;
+    mask-image: radial-gradient(circle at 0 100%, transparent 16px, black 16.5px);
+    -webkit-mask-image: radial-gradient(circle at 0 100%, transparent 16px, black 16.5px);
+  }
+}
+
+/* Section titles: large display size shared by every section */
+.section-title {
+  font-size: clamp(40px, 5.2vw, 84px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+/* Client logo marquee */
+@keyframes logo-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.logo-track {
+  animation: logo-scroll 38s linear infinite;
+}
+.logo-marquee:hover .logo-track {
+  animation-play-state: paused;
+}
+.logo-marquee::before,
+.logo-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  z-index: 2;
+  pointer-events: none;
+}
+.logo-marquee::before {
+  left: 0;
+  background: linear-gradient(to right, var(--paper), transparent);
+}
+.logo-marquee::after {
+  right: 0;
+  background: linear-gradient(to left, var(--paper), transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-track { animation: none; }
+}
