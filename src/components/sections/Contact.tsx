@@ -2,18 +2,21 @@
 
 import { FormEvent, useState } from "react";
 import { motion } from "motion/react";
-import { site } from "@/lib/site";
+import { useLang } from "@/components/providers/LanguageProvider";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 type Status = "idle" | "sending" | "sent" | "error";
+type ErrorCode = "required" | "email" | "long" | "invalid" | "generic";
 
 const field =
   "w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3.5 text-[15px] text-white placeholder:text-white/40 outline-none transition-colors focus:border-gp-yellow/70 focus:bg-white/[0.09]";
 
 export default function Contact() {
+  const { t } = useLang();
+  const c = t.contact;
   const [status, setStatus] = useState<Status>("idle");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<ErrorCode | null>(null);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -27,13 +30,17 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const json = (await res.json()) as { ok: boolean; error?: string };
-      if (!res.ok || !json.ok) throw new Error(json.error ?? "Envoi impossible.");
+      const json = (await res.json()) as { ok: boolean; code?: ErrorCode };
+      if (!res.ok || !json.ok) {
+        setStatus("error");
+        setError(json.code ?? "generic");
+        return;
+      }
       setStatus("sent");
       form.reset();
-    } catch (err) {
+    } catch {
       setStatus("error");
-      setError(err instanceof Error ? err.message : "Envoi impossible.");
+      setError("generic");
     }
   }
 
@@ -49,14 +56,11 @@ export default function Contact() {
             transition={{ duration: 0.8, ease }}
           >
             <h2 className="section-title !text-white">
-              Parlons de
+              {c.title1}
               <br />
-              votre projet
+              {c.title2}
             </h2>
-            <p className="mt-8 max-w-[46ch] text-[17px] leading-relaxed text-white/75">
-              Inspection par drone, imagerie satellitaire ou supervision de vos sites : décrivez-nous votre besoin, nous
-              revenons vers vous sous 48 heures avec une première approche.
-            </p>
+            <p className="mt-8 max-w-[46ch] text-[17px] leading-relaxed text-white/75">{c.text}</p>
           </motion.div>
 
           {/* Right: form */}
@@ -70,31 +74,24 @@ export default function Contact() {
           >
             <div className="grid gap-5 sm:grid-cols-2">
               <label className="flex flex-col gap-2 text-[13px] font-medium text-white/70">
-                Nom
-                <input name="name" required autoComplete="name" placeholder="Votre nom" className={field} />
+                {c.name}
+                <input name="name" required autoComplete="name" placeholder={c.namePh} className={field} />
               </label>
               <label className="flex flex-col gap-2 text-[13px] font-medium text-white/70">
-                Entreprise
-                <input name="company" autoComplete="organization" placeholder="Votre organisation" className={field} />
+                {c.company}
+                <input name="company" autoComplete="organization" placeholder={c.companyPh} className={field} />
               </label>
               <label className="flex flex-col gap-2 text-[13px] font-medium text-white/70 sm:col-span-2">
-                Email
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  placeholder="vous@entreprise.com"
-                  className={field}
-                />
+                {c.email}
+                <input name="email" type="email" required autoComplete="email" placeholder={c.emailPh} className={field} />
               </label>
               <label className="flex flex-col gap-2 text-[13px] font-medium text-white/70 sm:col-span-2">
-                Besoin
+                {c.need}
                 <select name="need" defaultValue="" className={`${field} appearance-none`}>
                   <option value="" disabled className="text-ink">
-                    Choisissez un service
+                    {c.choose}
                   </option>
-                  {site.needs.map((n) => (
+                  {c.needs.map((n) => (
                     <option key={n} value={n} className="text-ink">
                       {n}
                     </option>
@@ -102,14 +99,8 @@ export default function Contact() {
                 </select>
               </label>
               <label className="flex flex-col gap-2 text-[13px] font-medium text-white/70 sm:col-span-2">
-                Message
-                <textarea
-                  name="message"
-                  required
-                  rows={5}
-                  placeholder="Décrivez votre site, votre périmètre et vos délais."
-                  className={`${field} resize-y`}
-                />
+                {c.message}
+                <textarea name="message" required rows={5} placeholder={c.messagePh} className={`${field} resize-y`} />
               </label>
               {/* honeypot */}
               <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
@@ -121,13 +112,13 @@ export default function Contact() {
                 disabled={status === "sending"}
                 className="inline-flex items-center justify-center gap-3 rounded-full bg-gp-yellow px-7 py-3.5 text-[15px] font-semibold text-ink transition-colors hover:bg-gp-yellow-deep disabled:opacity-60"
               >
-                {status === "sending" ? "Envoi…" : "Envoyer la demande"}
+                {status === "sending" ? c.sending : c.submit}
                 <span aria-hidden>→</span>
               </button>
               <p className="text-[13px] leading-relaxed text-white/50" aria-live="polite">
-                {status === "sent" && <span className="text-gp-yellow">Merci, votre demande a bien été envoyée.</span>}
-                {status === "error" && <span className="text-red-300">{error}</span>}
-                {(status === "idle" || status === "sending") && "Réponse sous 48 h ouvrées."}
+                {status === "sent" && <span className="text-gp-yellow">{c.sent}</span>}
+                {status === "error" && <span className="text-red-300">{c.errors[error ?? "generic"]}</span>}
+                {(status === "idle" || status === "sending") && c.hint}
               </p>
             </div>
           </motion.form>

@@ -3,16 +3,27 @@
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { site } from "@/lib/site";
+import { useLang } from "@/components/providers/LanguageProvider";
 
 type Props = { open: boolean; onClose: () => void };
 
 export default function MenuOverlay({ open, onClose }: Props) {
+  const { t } = useLang();
+  const nav = [
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.services, href: "/#services" },
+    { label: t.nav.sectors, href: "/#secteurs" },
+    { label: t.nav.projects, href: "/#realisations" },
+    { label: t.nav.trusted, href: "/#confiance" },
+    { label: t.nav.contact, href: "/#contact" },
+  ];
+
   return (
     <AnimatePresence>
       {open && (
         <>
           <motion.button
-            aria-label="Fermer le menu"
+            aria-label={t.header.close}
             className="fixed inset-0 z-40 bg-ink/10 backdrop-blur-[2px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -35,10 +46,7 @@ export default function MenuOverlay({ open, onClose }: Props) {
                   <span className="h-1 w-1 rounded-sm bg-ink-3" />
                   <span>{site.tagline}</span>
                 </div>
-                <div className="max-w-xs text-[13px] leading-relaxed text-ink-3">
-                  Prestataire de services par drone, de services satellitaires et de solutions de monitoring pour
-                  les infrastructures, les territoires et les réseaux.
-                </div>
+                <div className="max-w-xs text-[13px] leading-relaxed text-ink-3">{t.menu.description}</div>
               </div>
 
               <div className="flex items-stretch gap-8 md:gap-14">
@@ -46,10 +54,10 @@ export default function MenuOverlay({ open, onClose }: Props) {
                   onClick={onClose}
                   className="flex w-20 items-center justify-center bg-paper-2 text-[15px] font-medium text-ink transition-colors hover:bg-gp-green-soft"
                 >
-                  close
+                  {t.header.close}
                 </button>
                 <nav className="flex flex-col items-end justify-center gap-1 py-2">
-                  {site.nav.map((item, i) => (
+                  {nav.map((item, i) => (
                     <motion.a
                       key={item.href}
                       href={item.href}

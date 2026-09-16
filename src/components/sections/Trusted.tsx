@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
+import { useLang } from "@/components/providers/LanguageProvider";
 
 type Logo =
   | { kind: "image"; name: string; src: string; width: number; height: number; h: number }
@@ -41,11 +42,12 @@ function LogoItem({ logo }: { logo: Logo }) {
 }
 
 export default function Trusted() {
+  const { t } = useLang();
   // Two identical tracks side by side: when the first one has scrolled out, the loop is seamless.
   const track = [...logos, ...logos];
 
   return (
-    <section id="confiance" aria-label="Ils nous ont fait confiance" className="w-full border-t border-line bg-paper">
+    <section id="confiance" aria-label={t.trusted.title} className="w-full border-t border-line bg-paper">
       <div className="mx-auto w-full max-w-[1880px] px-6 pb-16 pt-16 md:px-8 md:pb-20 md:pt-24">
         <motion.h2
           className="section-title mx-auto max-w-[1480px]"
@@ -54,7 +56,7 @@ export default function Trusted() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease }}
         >
-          Ils nous ont fait confiance
+          {t.trusted.title}
         </motion.h2>
       </div>
 

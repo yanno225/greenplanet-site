@@ -1,29 +1,40 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { site, telHref } from "@/lib/site";
-
-const columns = [
-  {
-    title: "Services",
-    links: [
-      { label: "Services par drone", href: "/#services" },
-      { label: "Services satellitaires", href: "/#services" },
-      { label: "Solutions de monitoring", href: "/#services" },
-      { label: "Secteurs d'application", href: "/#secteurs" },
-    ],
-  },
-  {
-    title: "Entreprise",
-    links: [
-      { label: "Nos réalisations", href: "/#realisations" },
-      { label: "Contact", href: "/#contact" },
-      { label: "Mentions légales", href: "/mentions-legales" },
-      { label: "Politique de confidentialité", href: "/confidentialite" },
-    ],
-  },
-];
+import { useLang } from "@/components/providers/LanguageProvider";
 
 export default function Footer() {
+  const { t } = useLang();
+  const f = t.footer;
+
+  const columns = [
+    {
+      title: f.servicesCol,
+      links: [
+        { label: f.links.drone, href: "/#services" },
+        { label: f.links.satellite, href: "/#services" },
+        { label: f.links.monitoring, href: "/#services" },
+        { label: f.links.sectors, href: "/#secteurs" },
+      ],
+    },
+    {
+      title: f.companyCol,
+      links: [
+        { label: f.links.projects, href: "/#realisations" },
+        { label: f.links.contact, href: "/#contact" },
+        { label: f.links.legal, href: "/mentions-legales" },
+        { label: f.links.privacy, href: "/confidentialite" },
+      ],
+    },
+  ];
+
+  const offices = [
+    { ...site.offices[0], name: f.hq, city: f.hqCity },
+    { ...site.offices[1], name: f.montreal, city: f.montrealCity },
+  ];
+
   return (
     <footer className="w-full border-t border-line bg-paper">
       <div className="mx-auto w-full max-w-[1880px] px-6 pb-8 pt-14 md:px-8 md:pt-20">
@@ -37,10 +48,7 @@ export default function Footer() {
                 <span className="text-[13px] font-normal tracking-wide text-ink-2">Technology</span>
               </span>
             </Link>
-            <p className="mt-5 max-w-[34ch] text-[14.5px] leading-relaxed text-ink-2">
-              Prestataire de services par drone, de services satellitaires et de solutions de monitoring pour les
-              infrastructures, les territoires et les réseaux.
-            </p>
+            <p className="mt-5 max-w-[34ch] text-[14.5px] leading-relaxed text-ink-2">{f.tagline}</p>
             <div className="mt-6 flex gap-3">
               {site.socials.map((s) => (
                 <a
@@ -74,7 +82,7 @@ export default function Footer() {
 
           {/* Offices */}
           <div className="flex flex-col gap-8">
-            {site.offices.map((o) => (
+            {offices.map((o) => (
               <div key={o.name}>
                 <div className="text-[12.5px] font-medium uppercase tracking-[0.16em] text-ink-3">{o.name}</div>
                 <div className="mt-3 text-[14.5px] leading-relaxed text-ink-2">
@@ -89,6 +97,11 @@ export default function Footer() {
                       {p}
                     </a>
                   ))}
+                  {o.fax && (
+                    <span className="text-ink-3">
+                      {f.fax} {o.fax}
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
@@ -99,23 +112,12 @@ export default function Footer() {
         </div>
 
         <div className="mx-auto mt-14 flex max-w-[1480px] flex-col justify-between gap-3 border-t border-line pt-6 text-[13px] text-ink-3 md:flex-row">
-          <span>© {new Date().getFullYear()} {site.fullName}. Tous droits réservés.</span>
+          <span>
+            © {new Date().getFullYear()} {site.fullName}. {f.rights}
+          </span>
           <span>{site.tagline}</span>
         </div>
-        <p className="mx-auto mt-3 max-w-[1480px] text-[11px] text-ink-3/70">
-          Modèle 3D du drone :{" "}
-          <a
-            href="https://sketchfab.com/3d-models/dji-fpv-by-sdc-high-performance-drone-d471ea8c6235457b8e131842e2cf3783"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline decoration-line underline-offset-2 hover:text-gp-green"
-          >
-            DJI FPV by SDC
-          </a>{" "}
-          par SDC PERFORMANCE, licence CC BY 4.0. Image satellite : NASA/JPL-Caltech. Photos secteurs : Unsplash, NARA
-          (domaine public) et Wikimedia Commons (CC0). Vidéos : NASA Scientific Visualization Studio (Landsat 9) et
-          Pixabay (orlandoalan).
-        </p>
+        <p className="mx-auto mt-3 max-w-[1480px] text-[11px] text-ink-3/70">{f.credits}</p>
       </div>
     </footer>
   );

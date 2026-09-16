@@ -43,17 +43,21 @@ src/
   app/api/contact/route.ts # réception du formulaire (validation, journal ; envoi email à brancher)
   app/mentions-legales, app/confidentialite # pages légales (textes à compléter)
   app/realisations/[slug]/page.tsx # page de détail d'un projet (5 pages statiques)
-  lib/projects.ts         # données des réalisations (accueil + pages de détail)
+
     hero/DroneScene.tsx   # Canvas R3F, lumières, environnement, ombre
     hero/Drone.tsx        # modèle du drone (rotors, bras, pieds, gimbal-œil)
     providers/SmoothScroll.tsx
   lib/site.ts             # nom, tagline, navigation
+  lib/i18n.ts             # dictionnaire FR / EN de tous les textes du site
+  lib/projects.ts         # données des réalisations (FR + EN, accueil + pages de détail)
+  components/providers/LanguageProvider.tsx # langue courante (mémorisée dans le navigateur)
+  components/layout/LangToggle.tsx # bouton FR / EN du header
 public/brand/             # logo (mark.png, logo.png, logo-white.png)
 ```
 
 ## Notes
 
-- Les textes et liens de navigation se modifient dans `src/lib/site.ts` et `src/app/page.tsx`.
+- Tous les textes (FR et EN) se modifient dans `src/lib/i18n.ts` ; les réalisations dans `src/lib/projects.ts` ; les coordonnées dans `src/lib/site.ts`. Toute nouvelle phrase doit être ajoutée dans les deux langues.
 - Le hero affiche le panneau clair « greenplanet » puis bascule sur deux clips vidéo 4K en boucle (satellite Landsat 9 par NASA SVS, drone DJI en vol stationnaire, gros plan, Pixabay) dans `public/video/` (mp4 H.264 3840×2160 + poster, muets, ~10 s chacun). Les composants du drone 3D (`Drone.tsx`, `DroneScene.tsx`) restent dans le projet mais ne sont plus utilisés. Le modèle GLB réaliste (`public/models/dji-fpv.glb`, compressé Draco, décodeurs dans `public/draco/`).
   Le modèle fusionne les quatre hélices dans un seul maillage : `Drone.tsx` découpe ces triangles au chargement,
   les place sous quatre pivots alignés sur le plan de chaque hélice, et regroupe les pièces de la caméra sous un

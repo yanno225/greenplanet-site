@@ -3,49 +3,22 @@
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useLang } from "@/components/providers/LanguageProvider";
 
-const sectors = [
-  {
-    id: "energie",
-    title: "Énergie et réseaux",
-    text: "Inspection de lignes haute tension, de postes et de parcs solaires par drone, thermographie et suivi satellitaire des emprises.",
-    image: "/images/sectors-energie.jpg",
-  },
-  {
-    id: "mines",
-    title: "Mines et carrières",
-    text: "Volumétrie des stocks, suivi de l'exploitation et surveillance des talus par photogrammétrie et LiDAR.",
-    image: "/images/sectors-mines.jpg",
-  },
-  {
-    id: "agriculture",
-    title: "Agriculture",
-    text: "Cartographie multispectrale, suivi de la santé des cultures et pilotage des rendements par satellite et drone.",
-    image: "/images/sectors-agriculture.jpg",
-  },
-  {
-    id: "btp",
-    title: "Infrastructures et BTP",
-    text: "Suivi de chantier, relevés topographiques et inspection d'ouvrages d'art, de routes et de ponts.",
-    image: "/images/sectors-btp.jpg",
-  },
-  {
-    id: "environnement",
-    title: "Environnement et forêts",
-    text: "Surveillance de la déforestation, des zones humides et des risques naturels par imagerie satellitaire.",
-    image: "/images/sectors-environnement.jpg",
-  },
-  {
-    id: "telecoms",
-    title: "Télécoms",
-    text: "Inspection de pylônes et d'antennes sans nacelle, audits d'installation et monitoring des sites.",
-    image: "/images/sectors-telecoms.jpg",
-  },
+const sectorMedia = [
+  { id: "energie", image: "/images/sectors-energie.jpg" },
+  { id: "mines", image: "/images/sectors-mines.jpg" },
+  { id: "agriculture", image: "/images/sectors-agriculture.jpg" },
+  { id: "btp", image: "/images/sectors-btp.jpg" },
+  { id: "environnement", image: "/images/sectors-environnement.jpg" },
+  { id: "telecoms", image: "/images/sectors-telecoms.jpg" },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Sectors() {
+  const { t } = useLang();
+  const sectors = sectorMedia.map((m, i) => ({ ...m, ...t.sectors.items[i] }));
   const [active, setActive] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
   const current = sectors[active];
@@ -67,11 +40,9 @@ export default function Sectors() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease }}
         >
-          <h2 className="section-title">
-            Secteurs d&apos;application
-          </h2>
+          <h2 className="section-title">{t.sectors.title}</h2>
           <p className="max-w-md text-[15px] leading-relaxed text-ink-2">
-            Des données fiables pour les opérateurs qui gèrent des sites étendus, des réseaux et des territoires.
+            {t.sectors.subtitle}
           </p>
         </motion.div>
 

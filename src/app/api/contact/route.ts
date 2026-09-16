@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   try {
     body = (await req.json()) as Payload;
   } catch {
-    return NextResponse.json({ ok: false, error: "Requête invalide." }, { status: 400 });
+    return NextResponse.json({ ok: false, code: "invalid" }, { status: 400 });
   }
 
   // Honeypot: bots fill every field, humans never see this one.
@@ -29,10 +29,10 @@ export async function POST(req: Request) {
   const message = (body.message ?? "").trim();
 
   if (!name || !email || !message) {
-    return NextResponse.json({ ok: false, error: "Nom, email et message sont obligatoires." }, { status: 400 });
+    return NextResponse.json({ ok: false, code: "required" }, { status: 400 });
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ ok: false, error: "Adresse email invalide." }, { status: 400 });
+    return NextResponse.json({ ok: false, code: "email" }, { status: 400 });
   }
   if (
     name.length > MAX.name ||
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     need.length > MAX.need ||
     message.length > MAX.message
   ) {
-    return NextResponse.json({ ok: false, error: "Un champ est trop long." }, { status: 400 });
+    return NextResponse.json({ ok: false, code: "long" }, { status: 400 });
   }
 
   // TODO: brancher l'envoi d'email (Resend, SendGrid, SMTP…) ou un CRM.

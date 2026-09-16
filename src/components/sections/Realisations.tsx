@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { projects } from "@/lib/projects";
+import { projects as allProjects, projectText } from "@/lib/projects";
+import { useLang } from "@/components/providers/LanguageProvider";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const N = projects.length;
+const N = allProjects.length;
 
 /* Arc geometry (desktop): circles sit on a circle of radius R whose rightmost point
    is the active slot. Earlier projects go below, later ones above. */
@@ -16,6 +17,8 @@ const STEP = 0.3; // radians between two slots
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function Realisations() {
+  const { t, lang } = useLang();
+  const projects = allProjects.map((p) => ({ slug: p.slug, image: p.image, ...projectText(p, lang) }));
   const sectionRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
@@ -47,7 +50,7 @@ export default function Realisations() {
                   <div key={p.slug} className="absolute left-[240px] top-1/2 -ml-11 -mt-11 h-22 w-22">
                     <motion.button
                       type="button"
-                      aria-label={`Réalisation ${pad(i + 1)}`}
+                      aria-label={`${t.projects.item} ${pad(i + 1)}`}
                       onClick={() => {
                         const el = sectionRef.current;
                         if (!el) return;
@@ -70,11 +73,9 @@ export default function Realisations() {
 
             {/* Header (text + image columns only, so the arc never overlaps it) */}
             <div className="col-span-2 flex flex-wrap items-end justify-between gap-x-10 gap-y-2 pt-5">
-              <h2 className="section-title">
-                Nos réalisations
-              </h2>
+              <h2 className="section-title">{t.projects.title}</h2>
               <p className="hidden max-w-md text-[15px] leading-relaxed text-ink-2 xl:block">
-                Des réseaux critiques déployés et opérés pour des gouvernements, des armées et des opérateurs.
+                {t.projects.subtitle}
               </p>
             </div>
 
@@ -104,7 +105,7 @@ export default function Realisations() {
                     href={`/realisations/${current.slug}`}
                     className="group mt-8 inline-flex items-center gap-3 rounded-full bg-gp-green px-6 py-3 text-[15px] font-medium text-white transition-colors hover:bg-gp-green-deep"
                   >
-                    Voir le projet
+                    {t.projects.cta}
                     <span aria-hidden className="transition-transform group-hover:translate-x-1">
                       →
                     </span>
@@ -116,7 +117,7 @@ export default function Realisations() {
             {/* Image: height capped so it never reaches the title on short screens */}
             <Link
               href={`/realisations/${current.slug}`}
-              aria-label={`Voir le projet ${current.client}`}
+              aria-label={`${t.projects.view} ${current.client}`}
               className="relative block w-full self-center justify-self-end rounded-[28px] bg-gp-green-soft p-3 transition-colors hover:bg-gp-green/15"
             >
               <div className="relative aspect-[5/4] max-h-[calc(100vh-270px)] w-full overflow-hidden rounded-[18px] bg-paper-2">
@@ -150,9 +151,9 @@ export default function Realisations() {
 
       {/* ---------- Mobile / tablet: stacked ---------- */}
       <div className="mx-auto w-full max-w-[1880px] px-6 py-20 lg:hidden">
-        <h2 className="section-title">Nos réalisations</h2>
+        <h2 className="section-title">{t.projects.title}</h2>
         <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink-2">
-          Des réseaux critiques déployés et opérés pour des gouvernements, des armées et des opérateurs.
+          {t.projects.subtitle}
         </p>
         <div className="mt-10 flex flex-col gap-10">
           {projects.map((p) => (
@@ -187,7 +188,7 @@ export default function Realisations() {
                 href={`/realisations/${p.slug}`}
                 className="mt-5 inline-flex items-center gap-2 rounded-full bg-gp-green px-5 py-2.5 text-[14px] font-medium text-white"
               >
-                Voir le projet <span aria-hidden>→</span>
+                {t.projects.cta} <span aria-hidden>→</span>
               </Link>
             </motion.article>
           ))}

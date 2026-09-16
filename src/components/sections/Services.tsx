@@ -3,43 +3,18 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { useLang } from "@/components/providers/LanguageProvider";
 
-const services = [
-  {
-    index: "01",
-    title: "Services par drone",
-    text: "Inspections aériennes, relevés LiDAR et photogrammétrie réalisés par nos pilotes certifiés, sur vos sites et infrastructures.",
-    slide: 0,
-  },
-  {
-    index: "02",
-    title: "Services satellitaires",
-    text: "Imagerie et analyses satellitaires pour suivre vos territoires, cultures et actifs à grande échelle, en continu.",
-    slide: 1,
-  },
-  {
-    index: "03",
-    title: "Solutions de monitoring",
-    text: "Plateformes de supervision temps réel : capteurs, alertes intelligentes et tableaux de bord opérés pour vous.",
-    slide: null,
-  },
-  {
-    index: "04",
-    title: "Données exploitables",
-    text: "De la mission au rapport : nos équipes livrent des données fiables, des analyses claires et des recommandations.",
-    slide: null,
-  },
-];
+const serviceSlides: (number | null)[] = [0, 1, null, null];
 
-const slides = [
-  { src: "/images/services-drone.jpg", alt: "Drone d'inspection en vol au-dessus d'une forêt" },
-  { src: "/images/services-satellite-nisar.jpg", alt: "Satellite d'observation en orbite au-dessus de la Terre" },
-];
+const slides = ["/images/services-drone.jpg", "/images/services-satellite-nisar.jpg"];
 
 const SLIDE_MS = 5000;
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Services() {
+  const { t } = useLang();
+  const services = t.services.items.map((it, i) => ({ ...it, index: String(i + 1).padStart(2, "0"), slide: serviceSlides[i] }));
   const [active, setActive] = useState(0);
   const [slide, setSlide] = useState(0);
 
@@ -65,11 +40,9 @@ export default function Services() {
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, ease }}
       >
-        <h2 className="section-title">
-          Nos services
-        </h2>
+        <h2 className="section-title">{t.services.title}</h2>
         <p className="max-w-md text-[15px] leading-relaxed text-ink-2">
-          Nous opérons les missions, traitons les données et livrons des résultats prêts à l&apos;emploi.
+          {t.services.subtitle}
         </p>
       </motion.div>
 
@@ -128,11 +101,11 @@ export default function Services() {
             animate={{ x: `${-slide * 100}%` }}
             transition={{ duration: 0.9, ease }}
           >
-            {slides.map((img, i) => (
-              <div key={img.src} className="relative h-full w-full shrink-0" aria-hidden={i !== slide}>
+            {slides.map((src, i) => (
+              <div key={src} className="relative h-full w-full shrink-0" aria-hidden={i !== slide}>
                 <Image
-                  src={img.src}
-                  alt={img.alt}
+                  src={src}
+                  alt={t.services.slides[i]}
                   width={1200}
                   height={1000}
                   sizes="(min-width: 1024px) 50vw, 100vw"
@@ -149,7 +122,7 @@ export default function Services() {
               <button
                 key={i}
                 type="button"
-                aria-label={`Image ${i + 1}`}
+                aria-label={`${t.services.image} ${i + 1}`}
                 onClick={() => setSlide(i)}
                 className="relative h-[3px] w-10 overflow-hidden rounded-full bg-white/40"
               >

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
+import { useLang } from "@/components/providers/LanguageProvider";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -15,17 +16,18 @@ const clips = [
     id: "satellite",
     mp4: "/video/satellite-4k.mp4",
     poster: "/video/satellite-poster.jpg",
-    label: "Observation satellitaire",
+    label: "satellite" as const,
   },
   {
     id: "drone",
     mp4: "/video/drone-4k.mp4",
     poster: "/video/drone-poster.jpg",
-    label: "Inspection par drone",
+    label: "drone" as const,
   },
 ];
 
 export default function Hero() {
+  const { t } = useLang();
   const [phase, setPhase] = useState<"intro" | "video">("intro");
   const [active, setActive] = useState(0);
   const videos = useRef<(HTMLVideoElement | null)[]>([]);
@@ -85,7 +87,7 @@ export default function Hero() {
               playsInline
               preload="auto"
               poster={c.poster}
-              aria-label={c.label}
+              aria-label={t.hero[c.label]}
             >
               <source src={c.mp4} type="video/mp4" />
             </video>
@@ -166,8 +168,8 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.25, ease }}
         >
-          <span className="block text-ink">Drones, satellites et monitoring autonomes.</span>
-          <span className="block text-ink-2">La précision qui protège la planète et vos infrastructures.</span>
+          <span className="block text-ink">{t.hero.line1}</span>
+          <span className="block text-ink-2">{t.hero.line2}</span>
         </motion.h1>
       </div>
     </section>

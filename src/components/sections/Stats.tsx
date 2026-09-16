@@ -2,14 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { animate, motion, useInView } from "motion/react";
+import { useLang } from "@/components/providers/LanguageProvider";
 
 type Stat = { value: number; prefix?: string; suffix?: string; label: string };
-
-const stats: Stat[] = [
-  { value: 100, suffix: "+", label: "Clients" },
-  { value: 100, suffix: "+", label: "Projets" },
-  { value: 90, suffix: "%", label: "Satisfaction" },
-];
 
 const DURATION = 2.2;
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -37,11 +32,18 @@ function Counter({ value, prefix, suffix, start }: Stat & { start: boolean }) {
 }
 
 export default function Stats() {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-120px" });
 
+  const stats: Stat[] = [
+    { value: 100, suffix: "+", label: t.stats.clients },
+    { value: 100, suffix: "+", label: t.stats.projects },
+    { value: 90, suffix: "%", label: t.stats.satisfaction },
+  ];
+
   return (
-    <section id="chiffres" aria-label="Chiffres clés" className="w-full bg-paper">
+    <section id="chiffres" className="w-full bg-paper">
       <div ref={ref} className="mx-auto w-full max-w-[1880px] px-6 pb-28 pt-8 md:px-8 md:pb-40 md:pt-12">
         <div className="mx-auto grid max-w-[1480px] grid-cols-1 gap-14 sm:grid-cols-3 sm:gap-8">
           {stats.map((s, i) => (

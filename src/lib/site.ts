@@ -33,13 +33,6 @@ export const site = {
     { label: "LinkedIn", href: "https://www.linkedin.com/company/greenplanet-technology" },
     { label: "Facebook", href: "https://www.facebook.com/greenplanettechnology" },
   ],
-  needs: [
-    "Services par drone",
-    "Services satellitaires",
-    "Solutions de monitoring",
-    "Données et analyses",
-    "Autre demande",
-  ],
 };
 
 export const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, "")}`;
