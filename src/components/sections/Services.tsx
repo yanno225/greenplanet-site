@@ -5,9 +5,14 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { useLang } from "@/components/providers/LanguageProvider";
 
-const serviceSlides: (number | null)[] = [0, 1, null, null];
+const serviceSlides: (number | null)[] = [0, 1, 2, 3];
 
-const slides = ["/images/services-drone.jpg", "/images/services-satellite-nisar.jpg"];
+const slides = [
+  "/images/services-drone.jpg",
+  "/images/services-satellite-nisar.jpg",
+  "/images/services-monitoring-v2.jpg",
+  "/images/services-data-v2.jpg",
+];
 
 const SLIDE_MS = 5000;
 const ease = [0.22, 1, 0.36, 1] as const;

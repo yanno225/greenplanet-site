@@ -41,7 +41,12 @@ const fr = {
         text: "De la mission au rapport : nos équipes livrent des données fiables, des analyses claires et des recommandations.",
       },
     ],
-    slides: ["Drone d'inspection en vol au-dessus d'une forêt", "Satellite d'observation en orbite au-dessus de la Terre"],
+    slides: [
+      "Drone d'inspection en vol au-dessus d'une forêt",
+      "Satellite d'observation en orbite au-dessus de la Terre",
+      "Tableau de bord de monitoring avec carte et indicateurs",
+      "Graphique de croissance projeté au-dessus d'une tablette",
+    ],
     image: "Image",
   },
   sectors: {
@@ -137,7 +142,7 @@ const fr = {
     fax: "Fax",
     rights: "Tous droits réservés.",
     credits:
-      "Image satellite : NASA/JPL-Caltech. Photos secteurs : Unsplash, NARA (domaine public) et Wikimedia Commons (CC0). Vidéos : NASA Scientific Visualization Studio (Landsat 9) et Pixabay (orlandoalan). Modèle 3D du drone : DJI FPV by SDC par SDC PERFORMANCE, licence CC BY 4.0.",
+      "Image satellite : NASA/JPL-Caltech. Photos services et secteurs : Unsplash, Pexels, NARA (domaine public) et Wikimedia Commons (CC0). Vidéos : NASA Scientific Visualization Studio (Landsat 9) et Pixabay (orlandoalan). Modèle 3D du drone : DJI FPV by SDC par SDC PERFORMANCE, licence CC BY 4.0.",
   },
   legal: {
     title: "Mentions légales",
@@ -208,7 +213,12 @@ const en: Dict = {
         text: "From mission to report: our teams deliver reliable data, clear analyses and recommendations.",
       },
     ],
-    slides: ["Inspection drone flying over a forest", "Earth observation satellite in orbit"],
+    slides: [
+      "Inspection drone flying over a forest",
+      "Earth observation satellite in orbit",
+      "Monitoring dashboard with map and indicators",
+      "Growth chart projected above a tablet",
+    ],
     image: "Image",
   },
   sectors: {
@@ -304,7 +314,7 @@ const en: Dict = {
     fax: "Fax",
     rights: "All rights reserved.",
     credits:
-      "Satellite image: NASA/JPL-Caltech. Industry photos: Unsplash, NARA (public domain) and Wikimedia Commons (CC0). Videos: NASA Scientific Visualization Studio (Landsat 9) and Pixabay (orlandoalan). Drone 3D model: DJI FPV by SDC by SDC PERFORMANCE, CC BY 4.0 licence.",
+      "Satellite image: NASA/JPL-Caltech. Service and industry photos: Unsplash, Pexels, NARA (public domain) and Wikimedia Commons (CC0). Videos: NASA Scientific Visualization Studio (Landsat 9) and Pixabay (orlandoalan). Drone 3D model: DJI FPV by SDC by SDC PERFORMANCE, CC BY 4.0 licence.",
   },
   legal: {
     title: "Legal notice",
